@@ -1,0 +1,84 @@
+@import 'tailwindcss';
+
+html {
+  /* scroll-behavior: smooth; */
+  scrollbar-width: none;
+  scrollbar-color: var(--header-color) transparent;
+}
+@font-face {
+  font-family: jose;
+  src: url('/fonts/JosefinSans-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: play;
+  src: url('/fonts/PlayfairDisplay-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: mont;
+  src: url('/fonts/Montserrat-Regular.ttf');
+}
+
+:root {
+  --ds-black: #000814;
+  --ds-blue: #001d3d;
+  --ds-light-blue: #003566;
+  --ds-yellow: #ffc300;
+  --ds-yellow-light: #ffd60a;
+  --ds-white: #f8f8f8;
+  --align-left: 10%;
+  --align-right: 10%;
+  --title: 10vh;
+  --subtitle: 4vh;
+  --text: 2.5vh;
+}
+@theme {
+  --color-ds-black: var(--ds-black);
+  --color-ds-blue: var(--ds-blue);
+  --color-ds-light-blue: var(--ds-light-blue);
+  --color-ds-yellow: var(--ds-yellow);
+  --color-ds-yellow-light: var(--ds-yellow-light);
+  --color-ds-white: var(--ds-white);
+
+  --spacing-align-left: var(--align-left);
+  --spacing-align-right: var(--align-right);
+
+  --text-title: var(--title);
+  --text-subtitle: var(--subtitle);
+  --text-text: var(--text);
+
+  --font-jose: jose, sans-serif;
+  --font-play: play, serif;
+  --font-mont: mont, sans-serif;
+}
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+@layer components {
+  .bg-page {
+    @apply bg-center bg-cover grayscale brightness-60 absolute fixed w-full h-full left-0 -z-10;
+    background-image: var(--bg-image);
+  }
+  .container {
+    @apply flex md:flex-row flex-col min-h-screen pl-align-left pr-align-right;
+  }
+  .half-container {
+    @apply flex-1 flex flex-col justify-center items-start gap-5;
+  }
+  .title {
+    @apply text-title font-jose text-ds-yellow z-50  whitespace-nowrap;
+  }
+  .subtitle {
+    @apply text-subtitle font-jose text-ds-white;
+  }
+  .text {
+    @apply text-text md:text-base text-ds-white;
+  }
+}
