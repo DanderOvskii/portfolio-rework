@@ -1,0 +1,33 @@
+"use client";
+
+import { ReactNode } from "react";
+import { usePathname } from "next/navigation";
+import NavBarPC from "@/components/navigation/NavBarPC";
+import Layout from "@/components/Layout";
+// import Footer from "@/components/pageSections/Footer";
+
+export default function RootLayoutClient({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const pathname = usePathname();
+  const noHeaderPaths = 
+    pathname === "/login" || 
+    pathname === "/signup" ||
+    pathname.startsWith("/projects");
+
+  const noFooterPaths = 
+    pathname === "/login" || 
+    pathname === "/signup";
+
+  return (
+    <body className="antialiased scroll-smooth lg:subpixel-antialiased bg-ds-blue">
+        <Layout>
+          {!noHeaderPaths && <NavBarPC />}
+          {children}
+        </Layout>
+        {/* {!noFooterPaths && <Footer />} */}
+    </body>
+  );
+}
