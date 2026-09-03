@@ -3,3 +3,9 @@ export interface NavItem {
   hash: string;
   route: string;
 }
+
+export interface SocialItem {
+  label: string;
+  href: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+}

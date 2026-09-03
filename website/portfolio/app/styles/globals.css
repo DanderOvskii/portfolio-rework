@@ -32,9 +32,9 @@ html {
   --ds-white: #f8f8f8;
   --align-left: 10%;
   --align-right: 10%;
-  --title: 10vh;
-  --subtitle: 4vh;
-  --text: 2.5vh;
+  --title-size: 10vh;
+  --subtitle-size: 4vh;
+  --text-size: 2.5vh;
 }
 @theme {
   --color-ds-black: var(--ds-black);
@@ -43,14 +43,14 @@ html {
   --color-ds-yellow: var(--ds-yellow);
   --color-ds-yellow-light: var(--ds-yellow-light);
   --color-ds-white: var(--ds-white);
-
+  
   --spacing-align-left: var(--align-left);
   --spacing-align-right: var(--align-right);
-
-  --text-title: var(--title);
-  --text-subtitle: var(--subtitle);
-  --text-text: var(--text);
-
+  
+  --text-title-size: var(--title-size);
+  --text-subtitle-size: var(--subtitle-size);
+  --text-text-size: var(--text-size);
+  
   --font-jose: jose, sans-serif;
   --font-play: play, serif;
   --font-mont: mont, sans-serif;
@@ -66,23 +66,48 @@ body {
 
 @layer components {
   .bg-page {
-    @apply bg-center bg-cover grayscale brightness-60 absolute fixed w-full h-full left-0 -z-10;
+    @apply bg-center bg-cover grayscale brightness-60  fixed w-full h-full left-0 -z-10;
     background-image: var(--bg-image);
   }
   .container {
-    @apply flex md:flex-row flex-col min-h-screen;
+    @apply flex md:flex-row flex-col min-h-screen z-0;
   }
   .half-container {
     @apply flex-1 flex flex-col justify-center w-full;
   }
   .title {
-    @apply text-title font-jose text-ds-yellow z-50  whitespace-nowrap;
+    @apply text-title-size font-mont text-ds-yellow z-50  whitespace-nowrap;
   }
   .subtitle {
-    @apply text-subtitle font-jose text-ds-white;
+    @apply text-subtitle-size font-jose text-ds-white;
   }
-  .text {
-    @apply text-text md:text-base text-ds-white;
+  .norm-text {
+    @apply text-text-size font-sans text-ds-white;
   }
-  
+  .social-button {
+    @apply w-11 h-11 fill-ds-white hover:fill-ds-yellow hover:scale-120 transition-all duration-200;
+  }
+}
+
+
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }

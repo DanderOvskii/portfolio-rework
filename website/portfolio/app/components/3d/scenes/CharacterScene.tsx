@@ -2,7 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import CharacterModel from "../models/CharacterModel";
+import CharacterModel from "../models/characterModel";
 
 const CharacterScene = () => {
     return (

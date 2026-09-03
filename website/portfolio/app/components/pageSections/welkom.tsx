@@ -1,7 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-const PianoScene = dynamic(() => import("../3d/scenes/pianoScene"), { ssr: false });
+const PianoScene = dynamic(() => import("@/components/3d/scenes/pianoScene"), { ssr: false });
 const Welkom = () => {
     return (
         <div id="welkom" className="container">

@@ -19,9 +19,11 @@ const geistMono = Geist_Mono({
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
+    
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      
     >
       <RootLayoutClient>{children}</RootLayoutClient>
     </html>
