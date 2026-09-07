@@ -1,11 +1,16 @@
 export interface NavItem {
-  label: string;
-  hash: string;
-  route: string;
+  label: string
+  hash: string
+  route: string
 }
 
 export interface SocialItem {
-  label: string;
-  href: string;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  label: string
+  href: string
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
+}
+
+export interface SocialButtonProps {
+  text?: boolean
+  horizontal?: boolean
 }

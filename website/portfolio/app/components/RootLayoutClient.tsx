@@ -6,7 +6,7 @@ import NavBarPC from '@/components/navigation/NavBarPC'
 import Layout from '@/components/Layout'
 import { ReactLenis } from '@/utils/lenis'
 
-// import Footer from "@/components/pageSections/Footer";
+import Footer from "@/components/pageSections/footer";
 
 export default function RootLayoutClient ({
   children
@@ -28,7 +28,7 @@ export default function RootLayoutClient ({
           {!noHeaderPaths && <NavBarPC />}
           {children}
         </Layout>
-        {/* {!noFooterPaths && <Footer />} */}
+        {!noFooterPaths && <Footer />}
       </body>
     </ReactLenis>
   )

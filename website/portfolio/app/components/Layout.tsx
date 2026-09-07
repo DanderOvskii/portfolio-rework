@@ -5,5 +5,5 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  return <main className="bg-ds-black pl-align-left pr-align-right">{children}</main>;
+  return <main className="bg-ds-black ">{children}</main>;
 }

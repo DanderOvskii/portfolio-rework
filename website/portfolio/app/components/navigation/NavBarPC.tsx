@@ -46,7 +46,7 @@ const NavBarPC = () => {
   return (
     <>
       <div
-        className={`w-full h-[10vh] hidden md:flex items-center md:display-block display-none  justify-start fixed font-[jose] z-10 transition-all ease-in-out duration-1000 ${
+        className={`pl-align-left bg-ds-black/10 backdrop-blur-[5px] backdrop-filter w-full h-[10vh] hidden md:flex items-center md:display-block display-none  justify-start fixed font-[jose] z-10 transition-all ease-in-out duration-1000 ${
           isVisible ? 'translate-y-0' : 'translate-y-[-10vh]'
         }`}
       >
@@ -81,14 +81,14 @@ const NavBarPC = () => {
         <div className='half-container  ml-align-left '>
           {navItems.map((item, index) => (
             <button
-            className=' title transition-all duration-500 hover:tracking-[10px] hover:text-ds-yellow w-fit text-ds-white'
-             
-              onClick={() =>{ setMenuOpen(false); handleClick(item.route, item.hash)}}
+              className=' title transition-all duration-500 hover:tracking-[10px] hover:text-ds-yellow w-fit text-ds-white'
+              onClick={() => {
+                setMenuOpen(false)
+                handleClick(item.route, item.hash)
+              }}
               key={index}
             >
-              <p >
-                {item.label}
-              </p>
+              <p>{item.label}</p>
             </button>
           ))}
           {isAdmin && (

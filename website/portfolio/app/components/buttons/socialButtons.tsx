@@ -1,11 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import { socialItems } from "@/components/buttons/socialConfig";
+import { SocialButtonProps } from "@/types";
 
 
-  const SocialButtons = () => {
+  const SocialButtons = ({text = false,horizontal = false}:SocialButtonProps) => {
      return (
-    <div className="flex gap-4 ">
+    <div className={` flex gap-1 ${horizontal ? 'flex-col' : 'flex-row'}  `}>
       {socialItems.map((item, index) => {
         const Icon = item.icon
 
@@ -16,9 +17,10 @@ import { socialItems } from "@/components/buttons/socialConfig";
             target="_blank"
             rel="noopener noreferrer"
             aria-label={item.label}
-            className="fill-thai-yellow"
+            className="flex flex-row gap-2.5 alighn-center "
           >
-            <Icon />
+            <Icon  />
+            {text &&<p className="subtitle transition-all duration-500 hover:tracking-[8px] hover:text-ds-yellow">{item.label}</p>}
           </Link>
         )
       })}
