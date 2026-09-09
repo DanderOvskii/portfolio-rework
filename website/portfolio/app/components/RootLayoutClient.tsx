@@ -15,11 +15,11 @@ export default function RootLayoutClient ({
 }) {
   const pathname = usePathname()
   const noHeaderPaths =
-    pathname === '/login' ||
-    pathname === '/signup' ||
+    pathname === '/auth/login' ||
+    pathname === '/auth/signup' ||
     pathname.startsWith('/projects')
 
-  const noFooterPaths = pathname === '/login' || pathname === '/signup'
+  const noFooterPaths = pathname === '/auth/login' || pathname === '/auth/signup'
 
   return (
     <ReactLenis root>

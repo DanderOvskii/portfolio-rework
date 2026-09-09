@@ -9,14 +9,16 @@ import {
   integer
 } from 'drizzle-orm/pg-core'
 
-export const roleEnum = pgEnum('Role', ['ADMIN', 'USER'])
+export const roleEnum = pgEnum('role', ['ADMIN', 'USER']);
 
 export const usersTable = pgTable('users', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
   lastname: varchar({ length: 255 }).notNull(),
-  age: integer().notNull(),
-  email: varchar({ length: 255 }).notNull().unique()
+  dateOfBirth: timestamp('dateOfBirth', { mode: 'date' }).defaultNow().notNull(),
+  email: varchar({ length: 255 }).notNull().unique(),
+  password: varchar({ length: 255 }).notNull(),
+  role: roleEnum().default("USER").notNull()
 })
 
 export const projects = pgTable('Project', {
@@ -26,5 +28,7 @@ export const projects = pgTable('Project', {
   projectDate: timestamp({mode: 'date'}).notNull(),
   languages: varchar({length: 255}).notNull(),
   image: text(),
-  website: text()
+  website: text(),
+  createdAt: timestamp().defaultNow().notNull(),
+  updatedAt: timestamp().defaultNow().$onUpdate(() => new Date()).notNull()
 })

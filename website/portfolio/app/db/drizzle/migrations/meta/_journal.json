@@ -8,6 +8,13 @@
       "when": 1788896109025,
       "tag": "0000_empty_paibok",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1788955863943,
+      "tag": "0001_easy_richard_fisk",
+      "breakpoints": true
     }
   ]
 }

@@ -87,6 +87,9 @@ body {
   .social-button {
     @apply w-11 h-11 fill-ds-white hover:fill-ds-yellow hover:scale-120 transition-all duration-200;
   }
+  .form-input{
+    @apply w-full px-3 py-2 mt-1 border text-ds-white rounded-md border-ds-white shadow-sm focus:outline-none focus:ring-ds-yellow focus:border-ds-yellow;
+  }
 }
 
 

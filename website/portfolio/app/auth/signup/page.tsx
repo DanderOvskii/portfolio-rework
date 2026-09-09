@@ -1,15 +1,20 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { loginUser } from "@/db/apiCalls/userApiCalls";
-import { genericErrors } from "@/utils/constants";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
+import { signUpUser } from "@/db/apiCalls/userApiCalls";
+import { genericErrors, initialFormData } from "@/utils/constants";
+import { SignUpFormData } from "@/types";
 
-const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const SignUp = () => {
+  const [formData, setFormData] = useState<SignUpFormData>(initialFormData);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -17,22 +22,56 @@ const LoginPage = () => {
     setError(null);
 
     try {
-      await loginUser(email, password);
+      await signUpUser(formData);
+      setFormData(initialFormData);
     } catch (error) {
-      setError((error as Error).message || genericErrors.loginFailed);
+      setError((error as Error).message || genericErrors.signupFailed);
     } finally {
-      setEmail("");
-      setPassword("");
       setLoading(false);
     }
   };
-   return (
+
+  return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-lg p-8 space-y-6 rounded shadow-md">
-        <h2 className="subtitle text-center">
-          Login
+        <h2 className="subtitle">
+          Sign Up
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="form-group">
+            <label
+              htmlFor="firstName"
+              className="norm-text"
+            >
+              First Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="form-input "
+            />
+          </div>
+          <div className="form-group">
+            <label
+              htmlFor="lastName"
+              className="norm-text"
+            >
+              Last Name
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
           <div className="form-group">
             <label
               htmlFor="email"
@@ -44,8 +83,8 @@ const LoginPage = () => {
               type="email"
               id="email"
               name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
               required
               className="form-input"
             />
@@ -61,9 +100,25 @@ const LoginPage = () => {
               type="password"
               id="password"
               name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
               required
+              className="form-input"
+            />
+          </div>
+          <div className="form-group">
+            <label
+              htmlFor="dateOfBirth"
+              className="norm-text"
+            >
+              Date of Birth
+            </label>
+            <input
+              type="date"
+              id="dateOfBirth"
+              name="dateOfBirth"
+              value={formData.dateOfBirth}
+              onChange={handleChange}
               className="form-input"
             />
           </div>
@@ -94,16 +149,16 @@ const LoginPage = () => {
                 <span className="sr-only">Loading...</span>
               </div>
             )}
-            <span className="">Login</span>
+            <span className="">Signup</span>
           </button>
         </form>
         <p className="norm-text text-center">
-          Don&apos;t have an account?{" "}
+          Already have an account?{" "}
           <Link
-            href="/auth/signup"
+            href="/auth/login"
             className="norm-text text-cyan-600"
           >
-            Sign up
+            Login
           </Link>
         </p>
       </div>
@@ -111,4 +166,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignUp;
