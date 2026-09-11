@@ -1,5 +1,5 @@
 import React from "react";
-import SocialButtons from "../buttons/socialButtons";
+import SocialButtons from "@/components/buttons/socialButtons";
 
 const Footer = () => {
     return (

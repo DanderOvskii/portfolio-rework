@@ -1,7 +1,7 @@
 import { SocialItem } from '@/types'
-import SvgGitHub from '../svgs/svgGitHub'
-import SvgInsta from '../svgs/svgInsta'
-import SvgLinkedIn from '../svgs/svrLinkedin'
+import SvgGitHub from '@/components/svgs/svgGitHub'
+import SvgInsta from '@/components/svgs/svgInsta'
+import SvgLinkedIn from '@/components/svgs/svrLinkedin'
 
 export const socialItems: SocialItem[] = [
   {

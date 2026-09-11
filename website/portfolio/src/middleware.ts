@@ -1,23 +1,24 @@
 import { NextResponse } from "next/server";
 import { CustomRequest } from "@/types";
 import { verifyToken } from "@/utils/auth";
-import { logoutUser } from "@/utils/api";
+// import { logoutUser } from "@/utils/api";
 
 export async function middleware(request: CustomRequest) {
   const { pathname } = request.nextUrl;
+  console.log("Middleware triggered for path:", pathname);
 
  if (pathname.startsWith("/admin")) {
     const token = request.cookies.get("token");
 
     if (!token) {
-      return NextResponse.redirect(new URL("auth/login", request.url));
+      return NextResponse.redirect(new URL("/", request.url));
     }
 
     try {
       const decoded = await verifyToken(token.value);
 
       if (!decoded?.userId || !decoded?.role || decoded.role !== "ADMIN") {
-        await logoutUser();
+        // await logoutUser();
         return NextResponse.redirect(new URL("/", request.url));
       }
 

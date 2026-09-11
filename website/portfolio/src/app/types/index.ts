@@ -32,6 +32,15 @@ export interface userData {
   role: string
 }
 
+export interface ProjectFormData {
+  name: string
+  description: string
+  projectDate: string
+  languages: string
+  image: string
+  website: string
+}
+
 export interface userTokenData {
   userId: number
   role: string

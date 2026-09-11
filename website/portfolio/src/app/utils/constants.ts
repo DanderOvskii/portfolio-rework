@@ -1,4 +1,4 @@
-import { SignUpFormData } from "@/types";
+import { SignUpFormData,ProjectFormData } from "@/types";
 
 
 export const invalidEmail = "Invalid email format";
@@ -21,14 +21,13 @@ export const initialFormData: SignUpFormData = {
   lastName: "",
   email: "",
   password: "",
-  role: "USER",
   dateOfBirth: "",
 };
-// export const initialProjectData: ProjectFormData = {
-//   name: "",
-//   description: "",
-//   projectDate: "",
-//   languages: "",
-//   image: "",
-//   website: "",
-// };
+export const initialProjectData: ProjectFormData = {
+  name: "",
+  description: "",
+  projectDate: "",
+  languages: "",
+  image: "",
+  website: "",
+};

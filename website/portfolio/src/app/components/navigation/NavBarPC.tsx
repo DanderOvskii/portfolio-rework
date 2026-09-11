@@ -5,8 +5,10 @@ import React, { useEffect, useState } from 'react'
 import { useLenis } from 'lenis/react'
 import { navItems } from './navConfig'
 import { useRouter } from 'next/navigation'
-import SvgBarComp from '../svgs/svgBarComp'
+import SvgBarComp from '@/components/svgs/svgBarComp'
 import PageButton from '@/components/buttons/pageButton'
+
+import { getUser,clearUser } from '@/utils/sessionStorage'
 
 const NavBarPC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -27,6 +29,15 @@ const NavBarPC = () => {
       router.push(`${route}${hash}`)
     }
   }
+
+  useEffect(() => {
+    const user = getUser()
+    setIsLoggedIn(Boolean(user?.id || user?.email))
+      if (user?.role === 'ADMIN') {
+      setIsAdmin(true)
+    }
+    console.log('isLoggedIn:', isLoggedIn)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,12 +73,12 @@ const NavBarPC = () => {
           ))}
 
           {isAdmin && (
-            <a
-              className='no-underline text-just-white text-subtitle transition-all ease-in-out duration-200 hover:text-header-color '
-              href='/admin'
+          <button
+              className='no-underline subtitle transition-all ease-in-out duration-200 hover:text-ds-yellow '
+              onClick={() => handleClick("admin", "/")}
             >
               <p>admin</p>
-            </a>
+            </button>
           )}
         </div>
       </div>
@@ -75,8 +86,8 @@ const NavBarPC = () => {
       <div
         id='Menu'
         className={`fixed w-full h-dvh bg-ds-light-blue ${
-          menuOpen ? 'translate-y-0' : '-translate-y-full'
-        } transition-all duration-500 flex flex-col justify-center md:justify-between md:flex-row right-0 z-10`}
+          menuOpen ? 'translate-y-0 pointer-events-auto' : '-translate-y-full pointer-events-none'
+        } transition-all duration-500 flex flex-col justify-center md:justify-between md:flex-row right-0 z-20`}
       >
         <div className='half-container  ml-align-left '>
           {navItems.map((item, index) => (
@@ -93,31 +104,31 @@ const NavBarPC = () => {
           ))}
           {isAdmin && (
             <a href='/admin' onClick={() => setMenuOpen(false)}>
-              <p className='subtitle  transition-all duration-500 hover:tracking-[10px] hover:text-header-color w-fit'>
+              <p className=' title transition-all duration-500 hover:tracking-[10px] hover:text-ds-yellow w-fit text-ds-white'>
                 admin
               </p>
             </a>
           )}
         </div>
 
-        <div className='half-container '>
+        <div className='half-container gap-5 '>
           <div className=' flex flex-col justify-center items-center gap-5'>
             <PageButton text='contact me' link='/contact' />
           </div>
-          {/* {isLoggedIn && (
-            <div className='relative flex flex-col justify-center items-center gap-5'>
+          {isLoggedIn && (
+            <div className='w-full flex flex-col align-middle justify-center items-center gap-5 '>
               <button
-                onClick={logoutUser}
-                className={styles.button48}
-                role='button'
+                onClick={() => {setMenuOpen(open => !open); clearUser()}}
+                className='button48 max-w-fit z-30'
+                type='button'
               >
                 <span>logout</span>
               </button>
             </div>
-          )} */}
+          )}
         </div>
       </div>
-      <div className='h-[10vh] flex justify-end items-center fixed aspect-[1.1] mr-align-left right-0 z-10'>
+      <div className='h-[10vh] flex justify-end items-center fixed aspect-[1.1] mr-align-left right-0 z-30'>
         <button
           type='button'
           onClick={() => setMenuOpen(open => !open)}
