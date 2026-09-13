@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { ProjectFormData } from "@/types";
 import { initialProjectData, genericErrors } from "@/utils/constants";
 import { uploadImage } from "@/db/apiCalls/imageApiCalls";
+import { addProject } from "@/db/apiCalls/projectApiCalls";
 
 export default function AddProject() {
     const [formData, setFormData] = useState<ProjectFormData>(initialProjectData);
@@ -53,6 +54,8 @@ export default function AddProject() {
           const { path } = await uploadImage(file);
           imagePath = path; // e.g. "/uploads/123-abc.png"
         }
+
+        console.log("imagePath", imagePath);
     
         // 2) Create project with the returned path
         await addProject({
@@ -60,8 +63,8 @@ export default function AddProject() {
           description: formData.description,
           projectDate: formData.projectDate, // "yyyy-mm-dd"
           languages: formData.languages,
-          website: formData.website || null,
-          image: imagePath,
+          website: formData.website || undefined,
+          image: imagePath || undefined, // Use the uploaded image path or undefined if no image was uploaded
         });
     
         setFormData(initialProjectData);
@@ -78,7 +81,7 @@ export default function AddProject() {
     <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen gap-10 p-6">
       <div className="relative w-full lg:w-1/2 h-64 lg:h-105">
         <Image
-          src="/undraw_dashboard.svg"
+          src={file ? URL.createObjectURL(file) : "/images/admin-dashboard.png"}
           alt="Admin Dashboard"
           fill
           style={{ objectFit: "contain" }}

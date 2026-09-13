@@ -37,8 +37,8 @@ export interface ProjectFormData {
   description: string
   projectDate: string
   languages: string
-  image: string
-  website: string
+  image?: string
+  website?: string
 }
 
 export interface userTokenData {
