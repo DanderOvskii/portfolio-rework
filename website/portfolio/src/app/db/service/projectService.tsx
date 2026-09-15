@@ -1,11 +1,9 @@
-import { db } from "@/db";
-import { projects } from "@/db/schema";
-import { ProjectFormData } from "@/types";
-import { eq } from "drizzle-orm";
+import { db } from '@/db'
+import { projects } from '@/db/schema'
+import { ProjectFormData, ProjectPreView } from '@/types'
+import { eq } from 'drizzle-orm'
 
-
-
-export async function createProject(data: ProjectFormData) {
+export async function createProject (data: ProjectFormData) {
   const [project] = await db
     .insert(projects)
     .values({
@@ -14,9 +12,30 @@ export async function createProject(data: ProjectFormData) {
       projectDate: new Date(data.projectDate),
       languages: data.languages,
       image: data.image,
-      website:data.website,
+      website: data.website
     })
-    .returning();
+    .returning()
 
-  return project;
+  return project
+}
+
+export async function getAllProjects(): Promise<ProjectPreView[]>{
+  const projectsList = await db
+  .select({
+    id:projects.id, 
+    name:projects.name,
+    image:projects.image
+  })
+  .from(projects);
+  return projectsList;
+}
+
+export async function getProjectById(id: string) {
+  const [project] = await db
+    .select()
+    .from(projects)
+    .where(eq(projects.id, Number(id)))
+    .limit(1);
+
+  return project ?? null;
 }

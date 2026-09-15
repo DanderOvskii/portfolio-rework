@@ -1,7 +1,7 @@
 // src/app/api/v1/projects/route.ts
 export const dynamic = 'force-dynamic'
 import { NextResponse } from 'next/server'
-import { createProject } from '@/db/service/projectService'
+import { createProject,getAllProjects } from '@/db/service/projectService'
 import { requireAdmin } from '@/utils/auth'
 
 
@@ -45,13 +45,7 @@ export async function POST (request: Request) {
   }
 }
 
-// export async function GET () {
-//   const projects = await prisma.project.findMany({
-//     select: {
-//       id: true,
-//       name: true,
-//       image: true
-//     }
-//   })
-//   return NextResponse.json(projects, { status: 200 })
-// }
+export async function GET () {
+  const projects = await getAllProjects()
+  return NextResponse.json(projects, { status: 200 })
+}

@@ -1,4 +1,4 @@
-import { Project, ProjectFormData } from "@/types";
+import { Project, ProjectFormData,ProjectPreView } from "@/types";
 
 
 export async function addProject(project: ProjectFormData) {
@@ -16,7 +16,7 @@ export async function addProject(project: ProjectFormData) {
   return response.json();
 }
 
-export async function getProjects(): Promise<Project[]> {
+export async function getProjects(): Promise<ProjectPreView[]> {
   const response = await fetch("/api/v1/projects",{cache:"no-store"});
   if (!response.ok) throw new Error((await response.json().catch(() => ({}))).message || "Failed to get projects");
   return await response.json();

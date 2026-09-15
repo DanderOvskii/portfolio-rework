@@ -19,7 +19,7 @@ export default function RootLayoutClient ({
     pathname === '/auth/signup' ||
     pathname.startsWith('/projects')
 
-  const noFooterPaths = pathname === '/auth/login' || pathname === '/auth/signup'
+  const noFooterPaths = pathname === '/auth/login' || pathname === '/auth/signup' || pathname.startsWith('/projects')
 
   return (
     <ReactLenis root>

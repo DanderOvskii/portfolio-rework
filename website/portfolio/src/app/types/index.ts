@@ -40,6 +40,20 @@ export interface ProjectFormData {
   image?: string
   website?: string
 }
+export interface ProjectPreView {
+  id: number
+  name: string
+  image?: string | null
+}
+export interface Project {
+  id: number
+  name: string
+  description: string
+  projectDate: string
+  languages: string
+  image?: string
+  website?: string
+}
 
 export interface userTokenData {
   userId: number

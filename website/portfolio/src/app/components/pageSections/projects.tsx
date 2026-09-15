@@ -1,13 +1,23 @@
-import React from 'react'
+import { getProjects } from '@/db/apiCalls/projectApiCalls';
+import { ProjectPreView } from '@/types';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react'
 
 const Projects = () => {
+    const [projects, setProjects] = useState<ProjectPreView[]>([]);
+     console.log("projects", projects);
+  
+      useEffect(() => {
+          getProjects().then(setProjects);
+      }, []);
   return (
     <div
       id='projects'
-      className='container bg-ds-blue  rounded-tl-[200px] rounded-tr-[200px]'
+      className='container flex-col bg-ds-blue  rounded-tl-[200px] rounded-tr-[200px]'
     >
       <p className='title'>projects</p>
-      {/* <div className='w-4/5 h-[60vh] flex gap-5 overflow-x-scroll overflow-y-hidden whitespace-nowrap items-center select-cont'>
+      <div className='w-4/5 h-[60vh] flex gap-5 overflow-x-scroll overflow-y-hidden whitespace-nowrap items-center select-cont'>
         {projects &&
           projects.map(project => (
             <div
@@ -29,12 +39,12 @@ const Projects = () => {
                   />
                 </div>
               </Link>
-              <p className='text-just-white font-play text-[30px] transition-all duration-500 group-hover:text-header-color'>
+              <p className='subtitle transition-all duration-500 group-hover:text-ds-yellow'>
                 {project.name}
               </p>
             </div>
           ))}
-      </div> */}
+      </div>
     </div>
   )
 }

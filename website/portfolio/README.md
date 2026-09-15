@@ -24,3 +24,6 @@ bun dev
 
 ## databse 
 the data base is a postgress databese wich i made with drizzle ORM. The database structure can be found in the db/sschema.tsx here can you change the tables add tables. To push the changes you can use (npx drizzle-kit push) if this does not work use (npx drizzle-kit generate) + (npx drizzle-kit migrate)
+
+## other info
+I made the svg compnents with this site: https://react-svgr.com/playground/?typescript=true
