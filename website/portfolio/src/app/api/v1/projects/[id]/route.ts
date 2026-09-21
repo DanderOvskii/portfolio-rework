@@ -2,19 +2,23 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/utils/auth";
 import { ProjectFormData } from "@/types";
-import {getProjectById} from "@/db/service/projectService";
-
+import {getProjectById , deleteProject} from "@/db/service/projectService";
+function parseId(id: string) {
+  const numberId = Number(id);
+  return Number.isInteger(numberId) && numberId > 0 ? numberId : null;
+}
 export async function GET(
   _request: Request,
   { params }: { params: { id: string } }
 ) {
   try {
     const { id } = await params;
-    if (!id) {
+        const projectId = parseId(id);
+    if (!projectId) {
       return NextResponse.json({ message: "Missing id" }, { status: 400 });
     }
 
-    const project = await getProjectById(id);
+    const project = await getProjectById(projectId);
     console.log("project", project);
     if (!project) {
       return NextResponse.json({ message: "Project not found" }, { status: 404 });
@@ -69,15 +73,18 @@ export async function PATCH(request: Request, { params }: { params: { id: string
 
 }
 
-export async function DELETE(request:Request,{ params }: { params: { id: string } }){
+export async function DELETE(
+  request:Request,
+  { params }: { params: { id: string } }){
   try{
     await requireAdmin(request);
-    const id = Number(params.id);
-    if (!id) {
+    const { id } = await params;
+    const projectId = parseId(id);
+    if (!projectId) {
       return NextResponse.json({ message: "missing id" }, { status: 400 });
     }
-    await prisma.project.delete({ where: { id } });
-    return NextResponse.json({ deleted: true }, { status: 200 });
+    const deletedProject = await deleteProject(projectId);
+    return NextResponse.json( deletedProject , { status: 200 });
   }
   catch (err: any) {
     const message = err?.message || "Failed to delete project";

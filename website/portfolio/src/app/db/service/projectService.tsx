@@ -30,7 +30,7 @@ export async function getAllProjects(): Promise<ProjectPreView[]>{
   return projectsList;
 }
 
-export async function getProjectById(id: string) {
+export async function getProjectById(id: number) {
   const [project] = await db
     .select()
     .from(projects)
@@ -38,4 +38,12 @@ export async function getProjectById(id: string) {
     .limit(1);
 
   return project ?? null;
+}
+
+export async function deleteProject(id:number){
+  const deleteProject = await db
+    .delete(projects)
+    .where(eq(projects.id, Number(id)))
+    return(deleteProject)
+
 }
