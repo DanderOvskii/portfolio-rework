@@ -2,18 +2,19 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/utils/auth";
 import { ProjectFormData } from "@/types";
-import {getProjectById , deleteProject} from "@/db/service/projectService";
+import {getProjectById , deleteProject,editProject} from "@/db/service/projectService";
+import { promises } from "dns";
 function parseId(id: string) {
   const numberId = Number(id);
   return Number.isInteger(numberId) && numberId > 0 ? numberId : null;
 }
 export async function GET(
   _request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
-        const projectId = parseId(id);
+    const projectId = parseId(id);
     if (!projectId) {
       return NextResponse.json({ message: "Missing id" }, { status: 400 });
     }
@@ -32,11 +33,13 @@ export async function GET(
   }
 }
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: Request, 
+  { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireAdmin(request);
-    const id = Number(params.id);
-    if (!id) {
+     const { id } = await params;
+     const projectId = parseId(id);
+    if (!projectId) {
       return NextResponse.json({ message: "missing id" }, { status: 400 });
     }
 
@@ -59,13 +62,10 @@ export async function PATCH(request: Request, { params }: { params: { id: string
     if (image !== undefined) data.image = image;
 
 
-    const updated = await prisma.project.update({
-      where: { id },
-      data,
-    });
+    const updatedProject = editProject(projectId,data)
 
 
-    return NextResponse.json(updated, { status: 200 });
+    return NextResponse.json(updatedProject, { status: 200 });
   } catch (err: any) {
     return NextResponse.json({ message: err?.message || "Failed to edit project" }, { status: 500 });
  }
@@ -75,7 +75,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
 
 export async function DELETE(
   request:Request,
-  { params }: { params: { id: string } }){
+  { params }: { params: Promise<{ id: string }> }){
   try{
     await requireAdmin(request);
     const { id } = await params;

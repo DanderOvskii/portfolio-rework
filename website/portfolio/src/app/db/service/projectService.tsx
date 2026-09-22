@@ -47,3 +47,20 @@ export async function deleteProject(id:number){
     return(deleteProject)
 
 }
+
+export async function editProject(id:number,data:ProjectFormData) {
+  const editProject = await db
+  .update(projects)
+  .set({
+    name:data.name,
+    description:data.description,
+    image:data.image,
+    languages:data.languages,
+    website:data.website,
+    projectDate: new Date(data.projectDate)
+
+  })
+  .where(eq(projects.id, Number(id)))
+  return(editProject)
+  
+}

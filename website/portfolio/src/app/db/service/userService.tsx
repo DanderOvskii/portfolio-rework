@@ -21,7 +21,7 @@ export async function createUser(data: SignUpFormData) {
   return user;
 }
 
-export async function findUserById(id: string) {
+export async function findUserById(id: number) {
   const [user] = await db
     .select()
     .from(usersTable)

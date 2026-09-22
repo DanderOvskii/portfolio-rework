@@ -3,15 +3,16 @@ import Image from "next/image";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { ProjectFormData } from "@/types";
 import { initialProjectData, genericErrors } from "@/utils/constants";
-import { uploadImage } from "@/db/apiCalls/imageApiCalls";
-import { addProject, getProject } from "@/db/apiCalls/projectApiCalls";
+import { deleteImage, uploadImage } from "@/db/apiCalls/imageApiCalls";
+import { editProject, getProject } from "@/db/apiCalls/projectApiCalls";
+import { useParams } from "next/navigation";
 
 export default function EditProject() {
      const [formData, setFormData] = useState<ProjectFormData>(initialProjectData);
-    const [originalImage, setOriginalImage] = useState<string|null>("");
+    const [originalImage, setOriginalImage] = useState<string|undefined>("");
     const [loading, setLoading] = useState(false);
     const [file, setFile] = useState<File | null>(null);
-    const params = Params<{ id: string }>();
+    const params = useParams<{ id: string }>();
     const id = params.id as string;
     const [error, setError] = useState<string | null>(null)
 
@@ -69,19 +70,18 @@ export default function EditProject() {
         let imagePath: string | null = null;
         if (file) {
           const { path } = await uploadImage(file);
-          imagePath = path; // e.g. "/uploads/123-abc.png"
+          imagePath = path; 
         }
 
         console.log("imagePath", imagePath);
     
-        // 2) Create project with the returned path
         const payload: any ={
           name: formData.name,
           description: formData.description,
-          projectDate: formData.projectDate, // "yyyy-mm-dd"
+          projectDate: formData.projectDate,
           languages: formData.languages,
           website: formData.website || undefined,
-          image: imagePath || undefined, // Use the uploaded image path or undefined if no image was uploaded
+          image: imagePath || undefined, 
         };
         await editProject(payload, id);
         if (file && originalImage && originalImage !== imagePath) {
@@ -102,7 +102,7 @@ export default function EditProject() {
     <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen gap-10 p-6">
       <div className="relative w-full lg:w-1/2 h-64 lg:h-105">
         <Image
-          src={file ? URL.createObjectURL(file) : "/images/admin-dashboard.png"}
+          src={file ? URL.createObjectURL(file):originalImage || "/images/admin-dashboard.png"}
           alt="Admin Dashboard"
           fill
           style={{ objectFit: "contain" }}
@@ -194,7 +194,7 @@ export default function EditProject() {
           className="button48"
           disabled={loading}
         >
-          <span>{loading ? "Saving..." : "Add Project"}</span>
+          <span>{loading ? "Saving..." : "Edit Project"}</span>
         </button>
       </form>
     </div>
