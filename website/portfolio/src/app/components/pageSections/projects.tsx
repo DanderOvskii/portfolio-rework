@@ -14,10 +14,10 @@ const Projects = () => {
   return (
     <div
       id='projects'
-      className='container flex-col bg-ds-blue  rounded-tl-[200px] rounded-tr-[200px]'
+      className='container  pl-0 pr-0  md:pl-align-left md:pr-align-right flex-col bg-ds-blue  rounded-tl-[200px] rounded-tr-[200px]'
     >
       <p className='title'>projects</p>
-      <div className='w-4/5 h-[60vh] flex gap-5 overflow-x-scroll overflow-y-hidden whitespace-nowrap items-center select-cont'>
+      <div className=' w-full md:w-4/5 h-[60vh] flex gap-5 overflow-x-scroll overflow-y-hidden whitespace-nowrap items-center select-cont'>
         {projects &&
           projects.map(project => (
             <div

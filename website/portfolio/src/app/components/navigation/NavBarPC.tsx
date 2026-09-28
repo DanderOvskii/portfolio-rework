@@ -89,7 +89,7 @@ const NavBarPC = () => {
           menuOpen ? 'translate-y-0 pointer-events-auto' : '-translate-y-full pointer-events-none'
         } transition-all duration-500 flex flex-col justify-center md:justify-between md:flex-row right-0 z-20`}
       >
-        <div className='half-container  ml-align-left '>
+        <div className='half-container ml-0 gap-7 md:gap-0  md:ml-align-left '>
           {navItems.map((item, index) => (
             <button
               className=' title transition-all duration-500 hover:tracking-[10px] hover:text-ds-yellow w-fit text-ds-white'
@@ -113,7 +113,16 @@ const NavBarPC = () => {
 
         <div className='half-container gap-5 '>
           <div className=' flex flex-col justify-center items-center gap-5'>
-            <PageButton text='contact me' link='/contact' />
+            {/* <PageButton text='contact me' link='/contact'  /> */}
+              <button
+              className='button48'
+              onClick={() => {
+                setMenuOpen(false)
+                handleClick("/contact", "#top")
+              }}
+            >
+              <span>contact me</span>
+            </button>
           </div>
           {isLoggedIn && (
             <div className='w-full flex flex-col align-middle justify-center items-center gap-5 '>
